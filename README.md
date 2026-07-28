@@ -8,6 +8,7 @@ Repository containing reports and C implementations for the **Cryptography and S
 |:---:|-------|:--------:|:------:|
 | 01 | Addition of Two Binary Numbers | 23 Jul 2026 | ✅ Completed |
 | 02 | GCD Computation Using Euclid's Algorithm | 23 Jul 2026 | ✅ Completed |
+| 03 | Implementation of ChaCha20 Stream Cipher | 28 Jul 2026 | ✅ Completed |
 
 ## Repository Structure
 
@@ -15,7 +16,8 @@ Repository containing reports and C implementations for the **Cryptography and S
 .
 ├── 01_Binary_Addition_Report.pdf
 ├── 02A_GCD_Euclid_Report.pdf
-└── 02B_GCD_Euclid.c
+├── 02B_GCD_Euclid.c
+└── 03_chacha20.c
 ```
 
 ## Author
