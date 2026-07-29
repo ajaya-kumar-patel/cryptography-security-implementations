@@ -17,7 +17,8 @@ Repository containing reports and C implementations for the **Cryptography and S
 ├── 01_Binary_Addition_Report.pdf
 ├── 02A_GCD_Euclid_Report.pdf
 ├── 02B_GCD_Euclid.c
-└── 03_chacha20.c
+├── 03A_ChaCha20_Report.pdf
+└── 03B_chacha20.c
 ```
 
 ## Author
