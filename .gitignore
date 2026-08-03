@@ -1,6 +1,7 @@
 # Compiled executable
 chacha20
 sorting_benchmark 
+benchmark
 
 # Object files
 *.o
