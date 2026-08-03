@@ -265,12 +265,17 @@ void benchmark_chacha20(const uint8_t key[32],
 
     double avg_cycles =
         (double)(end_cycles - start_cycles) / ITERATIONS;
+    
+    // double cycles_per_bit = avg_cycles / (len * 8.0);
+    // double cycles_per_byte = avg_cycles / len;
 
     printf("\n========== Benchmark ==========\n");
     printf("Iterations          : %d\n", ITERATIONS);
     printf("Total Time          : %lu ns\n", total_ns);
     printf("Average Time        : %.2f ns\n", avg_ns);
     printf("Average CPU Cycles  : %.2f\n", avg_cycles);
+    // printf("Cycles per Byte     : %.4f\n", cycles_per_byte);
+    // printf("Cycles per Bit      : %.6f\n", cycles_per_bit);
 }
 
 

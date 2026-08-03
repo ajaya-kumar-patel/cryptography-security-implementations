@@ -13,6 +13,7 @@
 #include <stdint.h>
 #include <time.h>
 #include <x86intrin.h>
+#include <limits.h>
 
 #define ITERATIONS 1000000ULL
 
@@ -75,13 +76,19 @@ void benchmark_gcd(unsigned int a, unsigned int b)
 
     double average_cycles =
         (double)(end_cycles - start_cycles) / ITERATIONS;
+    
+    size_t input_bits = 2 * sizeof(unsigned int) * CHAR_BIT;
+    double cycles_per_bit = average_cycles / (double)input_bits;
 
+    printf("%zu\n", sizeof(unsigned int));
+    printf("%d\n", CHAR_BIT);
 
     printf("\n========== Benchmark ==========\n");
     printf("Iterations          : %llu\n", ITERATIONS);
     printf("Total Time          : %.6f seconds\n", total_time);
     printf("Average Time        : %.12f seconds\n", average_time);
     printf("Average CPU Cycles  : %.2f cycles\n", average_cycles);
+    printf("Cycles per Bit      : %.6f\n", cycles_per_bit);
 }
 
 /*
