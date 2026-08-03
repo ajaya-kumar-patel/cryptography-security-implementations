@@ -9,7 +9,8 @@ Repository containing reports and C implementations for the **Cryptography and S
 | 01 | Addition of Two Binary Numbers | 23 Jul 2026 | ✅ Completed |
 | 02 | GCD Computation Using Euclid's Algorithm | 23 Jul 2026 | ✅ Completed |
 | 03 | Implementation of ChaCha20 Stream Cipher | 28 Jul 2026 | ✅ Completed |
-| 04 | Performance Comparison of Sorting Algorithm | 29 Jul 2026 | Code Completed (Report Pending) |
+| 04 | Performance Comparison of Sorting Algorithm | 03 Aug 2026 | ✅ Completed |
+| 05 | Implementation of AES-128 Block Cipher | 04 Aug 2026 | ⏳ Report Pending |
 
 ## Repository Structure
 
@@ -20,7 +21,10 @@ Repository containing reports and C implementations for the **Cryptography and S
 ├── 02B_GCD_Euclid.c
 ├── 03A_ChaCha20_Report.pdf
 ├── 03B_chacha20.c
-└── 04B_sorting_benchmark.c
+├── 04A_Performance_Analysis_of_Sorting_Algorithms.pdf
+├── 04B_Sorting_Benchmark.c
+├── 05A_AES128_Report.pdf
+└── 05B_AES128.c
 ```
 
 ## Author

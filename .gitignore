@@ -2,6 +2,7 @@
 chacha20
 sorting_benchmark 
 benchmark
+aes128
 
 # Object files
 *.o
