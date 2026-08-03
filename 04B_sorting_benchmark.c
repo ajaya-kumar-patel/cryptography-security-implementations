@@ -16,11 +16,26 @@
 #include <stdint.h>     // uint64_t
 #include <time.h>       // clock_gettime()
 #include <x86intrin.h>  // __rdtscp()
+#include <limits.h>
+#include <math.h>
+
 
 #define SIZE 10000
 #define ITERATIONS 100
 
-typedef void (*sort_function)(int arr[], int n);
+#define MIN_SIZE 1000
+#define MAX_SIZE 10000
+#define STEP 1000
+
+uint64_t comparison_count = 0;
+uint64_t swap_count = 0;
+
+typedef void (*sort_function)(int arr[], int n);    // Function pointer type for sorting algorithms
+
+void benchmark_sort(const char *name, sort_function sort, const int original[], int n);
+
+void benchmark_size();
+double measure_time(sort_function sort, const int original[], int n);
 
 void merge_sort(int arr[], int left, int right);
 void merge(int arr[], int left, int mid, int right);
@@ -29,22 +44,17 @@ void quick_sort(int arr[], int low, int high);
 int partition(int arr[], int low, int high);
 void swap(int *a, int *b);
 
-
 void heap_sort(int arr[], int n);
 void heapify(int arr[], int n, int i);
-void swap(int *a, int *b);
 
 void merge_sort_wrapper(int arr[], int n);
 void quick_sort_wrapper(int arr[], int n);
 
-void benchmark_sort(const char *name,
-                    sort_function sort,
-                    const int original[],
-                    int n);
-
 int main(void)
 {
     int original[SIZE];
+
+    printf("Array Size            : %d\n", SIZE);
 
     srand(42);
 
@@ -65,6 +75,10 @@ int main(void)
                    heap_sort,
                    original,
                    SIZE);
+
+    
+    // SIZE VS TIME ANALYSIS
+    benchmark_size();
 
     return 0;
 }
@@ -92,11 +106,9 @@ void merge(int arr[], int left, int mid, int right)
     int left_array[n1];
     int right_array[n2];
 
-    // Copy left half
     for(int i = 0; i < n1; i++)
         left_array[i] = arr[left + i];
 
-    // Copy right half
     for(int i = 0; i < n2; i++)
         right_array[i] = arr[mid + 1 + i];
 
@@ -104,36 +116,28 @@ void merge(int arr[], int left, int mid, int right)
     int j = 0;
     int k = left;
 
-    // Merge back into original array
     while(i < n1 && j < n2)
     {
+        comparison_count++; 
+
         if(left_array[i] <= right_array[j])
         {
-            arr[k] = left_array[i];
-            i++;
+            arr[k++] = left_array[i++];
         }
         else
         {
-            arr[k] = right_array[j];
-            j++;
+            arr[k++] = right_array[j++];
         }
-        k++;
     }
 
-    // Copy remaining elements of left array
     while(i < n1)
     {
-        arr[k] = left_array[i];
-        i++;
-        k++;
+        arr[k++] = left_array[i++];
     }
 
-    // Copy remaining elements of right array
     while(j < n2)
     {
-        arr[k] = right_array[j];
-        j++;
-        k++;
+        arr[k++] = right_array[j++];
     }
 }
 
@@ -160,6 +164,8 @@ int partition(int arr[], int low, int high)
 
     for(int j = low; j < high; j++)
     {
+        comparison_count++;
+
         if(arr[j] <= pivot)
         {
             i++;
@@ -172,9 +178,10 @@ int partition(int arr[], int low, int high)
     return i + 1;
 }
 
-// Swap two elements
 void swap(int *a, int *b)
 {
+    swap_count++;
+
     int temp = *a;
     *a = *b;
     *b = temp;
@@ -206,11 +213,21 @@ void heapify(int arr[], int n, int i)
     int left = 2 * i + 1;
     int right = 2 * i + 2;
 
-    if(left < n && arr[left] > arr[largest])
-        largest = left;
+    if(left < n)
+    {
+        comparison_count++;
 
-    if(right < n && arr[right] > arr[largest])
-        largest = right;
+        if(arr[left] > arr[largest])
+            largest = left;
+    }
+
+    if(right < n)
+    {
+        comparison_count++;
+
+        if(arr[right] > arr[largest])
+            largest = right;
+    }
 
     if(largest != i)
     {
@@ -241,8 +258,26 @@ void benchmark_sort(const char *name,
                     const int original[],
                     int n)
 {
+    double nlogn = n * log2((double)n);
+
     int arr[n];
 
+    comparison_count = 0;
+    swap_count = 0;
+
+    memcpy(arr, original, sizeof(arr));
+    sort(arr, n);
+
+    printf("\n=====================================\n");
+    printf("%s\n", name);
+    printf("=====================================\n");
+    printf("Normalized Comparisons (Comparisons / nlog2n) : %.4f\n", comparison_count / nlogn);
+    printf("Normalized Swaps (Swaps / nlog2n) : %.4f\n", swap_count / nlogn);
+
+    comparison_count = 0;
+    swap_count = 0;
+
+    // Time Measure
     unsigned int aux;
     struct timespec start_time, end_time;
     uint64_t start_cycles, end_cycles;
@@ -273,17 +308,67 @@ void benchmark_sort(const char *name,
 
     double avg_cycles =
         (double)(end_cycles - start_cycles) / ITERATIONS;
+    
+    size_t total_bytes = n * sizeof(arr[0]);
+    size_t total_bits  = total_bytes * CHAR_BIT;
 
-    printf("\n=====================================\n");
-    printf("%s\n", name);
-    printf("=====================================\n");
-    printf("Checksum            : %d\n", checksum);
+    double cycles_per_byte = avg_cycles / (double)total_bytes;
+    double cycles_per_bit  = avg_cycles / (double)total_bits;
+
     printf("Iterations          : %d\n", ITERATIONS);
-    printf("Total Time          : %llu ns\n",
-        (unsigned long long)total_ns);
+    printf("Total Time          : %llu ns\n", (unsigned long long)total_ns);
     printf("Average Time        : %.2f ns\n", avg_ns);
     printf("Average CPU Cycles  : %.2f\n", avg_cycles);
+    printf("Cycles per Byte     : %.4f\n", cycles_per_byte);
+    printf("Cycles per Bit      : %.6f\n", cycles_per_bit);
 }
+
+
+// ======================= Function for Time vs Size Analysis =================
+void benchmark_size()
+{
+    printf("\n\nSize vs Time Analysis\n");
+    printf("Size\tMerge\tQuick\tHeap\n");
+    for(int n = MIN_SIZE; n <= MAX_SIZE; n += STEP)
+    {
+        int original[n];
+        for(int i = 0; i < n; i++)
+            original[i] = rand();
+
+        double merge_time = measure_time(merge_sort_wrapper, original, n);
+        double quick_time = measure_time(quick_sort_wrapper, original, n);
+        double heap_time  = measure_time(heap_sort, original, n);
+
+        printf("%d\t%.2f\t%.2f\t%.2f\n",
+                n,
+                merge_time,
+                quick_time,
+                heap_time);
+    }
+}
+
+double measure_time(sort_function sort,
+                    const int original[],
+                    int n)
+{
+    int arr[n];
+
+    unsigned int aux;
+    uint64_t start, end;
+
+    start = __rdtscp(&aux);
+
+    for(int i = 0; i < ITERATIONS; i++)
+    {
+        memcpy(arr, original, sizeof(arr));
+        sort(arr,n);
+    }
+
+    end = __rdtscp(&aux);
+
+    return (double)(end-start)/ITERATIONS;
+}
+
 
 /*
  * References:
