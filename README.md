@@ -14,6 +14,7 @@ Repository containing reports and C implementations for the **Cryptography and S
 | 06 | Implementation of RC4 | 04 Aug 2026 | ✅ Completed |
 | 07 | Implementation of Kyber | 06 Nov 2026 | ✅ Completed |
 | 08 | Implementation of Dilithium Digital Signature Scheme | 06 Nov 2026 | ✅ Completed |
+| 09 | Verilog Assignments | 06 Nov 2026 | ✅ Completed |
 
 ## Repository Structure
 
@@ -30,7 +31,9 @@ Repository containing reports and C implementations for the **Cryptography and S
 ├── 05B_AES128.c
 ├── 06_RC4.c
 ├── 07_Kyber.c
-└── 08_dilithium.c
+├── 08_dilithium.c
+└── 09_Verilog_Assignments.pdf
+
 ```
 
 ## Author
