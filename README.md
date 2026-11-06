@@ -12,7 +12,8 @@ Repository containing reports and C implementations for the **Cryptography and S
 | 04 | Performance Comparison of Sorting Algorithm | 03 Aug 2026 | ✅ Completed |
 | 05 | Implementation of AES-128 Block Cipher | 04 Aug 2026 | ✅ Completed |
 | 06 | Implementation of RC4 | 04 Aug 2026 | ✅ Completed |
-| 07 | Implementation of Kyber | 01 Nov 2026 | ✅ Completed |
+| 07 | Implementation of Kyber | 06 Nov 2026 | ✅ Completed |
+| 08 | Implementation of Dilithium Digital Signature Scheme | 06 Nov 2026 | ✅ Completed |
 
 ## Repository Structure
 
@@ -26,7 +27,10 @@ Repository containing reports and C implementations for the **Cryptography and S
 ├── 04A_Performance_Analysis_of_Sorting_Algorithms.pdf
 ├── 04B_Sorting_Benchmark.c
 ├── 05A_AES128_Report.pdf
-└── 05B_AES128.c
+├── 05B_AES128.c
+├── 06_RC4.c
+├── 07_Kyber.c
+└── 08_dilithium.c
 ```
 
 ## Author

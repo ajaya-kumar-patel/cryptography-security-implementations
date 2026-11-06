@@ -5,7 +5,7 @@ benchmark
 aes128
 rc4
 Kyber
-
+dilithium
 
 # Object files
 *.o
