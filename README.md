@@ -10,7 +10,8 @@ Repository containing reports and C implementations for the **Cryptography and S
 | 02 | GCD Computation Using Euclid's Algorithm | 23 Jul 2026 | ✅ Completed |
 | 03 | Implementation of ChaCha20 Stream Cipher | 28 Jul 2026 | ✅ Completed |
 | 04 | Performance Comparison of Sorting Algorithm | 03 Aug 2026 | ✅ Completed |
-| 05 | Implementation of AES-128 Block Cipher | 04 Aug 2026 | ⏳ Report Pending |
+| 05 | Implementation of AES-128 Block Cipher | 04 Aug 2026 | ✅ Completed |
+| 06 | Implementation of RC4 | 04 Aug 2026 | ✅ Completed |
 
 ## Repository Structure
 
