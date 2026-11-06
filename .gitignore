@@ -4,6 +4,8 @@ sorting_benchmark
 benchmark
 aes128
 rc4
+Kyber
+
 
 # Object files
 *.o

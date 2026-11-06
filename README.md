@@ -12,6 +12,7 @@ Repository containing reports and C implementations for the **Cryptography and S
 | 04 | Performance Comparison of Sorting Algorithm | 03 Aug 2026 | ✅ Completed |
 | 05 | Implementation of AES-128 Block Cipher | 04 Aug 2026 | ✅ Completed |
 | 06 | Implementation of RC4 | 04 Aug 2026 | ✅ Completed |
+| 07 | Implementation of Kyber | 01 Nov 2026 | ✅ Completed |
 
 ## Repository Structure
 
